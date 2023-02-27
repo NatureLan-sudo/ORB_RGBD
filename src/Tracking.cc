@@ -233,6 +233,15 @@ cv::Mat Tracking::GrabImageStereo(const cv::Mat &imRectLeft,
 // 1、将图像转为mImGray和imDepth并初始化mCurrentFrame
 // 2、进行tracking过程
 // 输出世界坐标系到该帧相机坐标系的变换矩阵
+/**
+
+/**
+ * @brief: 
+ * @param [Mat] &imRGB:  输入rgb图像
+ * @param [Mat] &imD:    输入深度图
+ * @param [double] &timestamp: 时间戳
+ * @return [*]
+ */
 cv::Mat Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
                                 const double &timestamp) {
   mImRGB = imRGB;

@@ -9,7 +9,7 @@ IF(NOT CMAKE_BUILD_TYPE)
   SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 ENDIF()
 
-SET(CMAKE_BUILD_TYPE Debug)
+SET(CMAKE_BUILD_TYPE Release)
 SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")
 
 
@@ -47,9 +47,11 @@ endif()
 find_package(Eigen3 REQUIRED)
 find_package(Pangolin REQUIRED)
 # adding for point cloud viewer and mapper
+# find_package(PCL 1.8)
+set(PCL_DIR /usr/lib/x86_64-linux-gnu/cmake/pcl/PCLConfig.cmake)
 find_package(PCL 1.8 REQUIRED)
-# message(STATUS "PCL dir: ${PCL_INCLUDE_DIRS}")
-set(PCL_INCLUDE_DIRS /usr/include/pcl)
+message(STATUS "PCL dir: ${PCL_INCLUDE_DIRS}")
+
 
 include_directories(
 ${PROJECT_SOURCE_DIR}
