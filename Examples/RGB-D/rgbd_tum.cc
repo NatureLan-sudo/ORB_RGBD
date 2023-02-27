@@ -123,9 +123,10 @@ int main(int argc, char **argv) {
 
     if (ttrack < T) usleep((T - ttrack) * 1e6);
   }
+  //!bug: 源码 有个地方没加全，这里的状态量没变过来，不知道为什么呢。
   while (SLAM.mpPointCloudMapping->loopbusy ||
          SLAM.mpPointCloudMapping->cloudbusy) {
-    cout << "loopbusy  || cloudbusy ************************************** "
+    cout <<"loopbusy = " << SLAM.mpPointCloudMapping->loopbusy << " " << "cloudbusy =" << SLAM.mpPointCloudMapping->cloudbusy <<"******" 
          << endl;
   }
   // Tracking time statistics

@@ -105,6 +105,10 @@ class PointCloudMapping {
 
   // 存储所有关键帧的点云、位姿、id信息，闭环中用到
   mutex pointcloudMutex;
+  // Eigen::aligned_allocator<PointCloude> .如果STL容器中的元素是Eigen数据库结构，编译能通过，但是可能会coredump
+  // 根本原因是内存对齐问题
+  // 使用举例：
+  // std::vector<Eigen::Matrix4d,Eigen::aligned_allocator<Eigen::Matrix4d>>
   vector<PointCloude, Eigen::aligned_allocator<PointCloude>> pointcloud;
 
   // 默认参数，可以从yaml文件输入修改
@@ -114,6 +118,7 @@ class PointCloudMapping {
   double meank = 50;
   // 离群点阈值
   double thresh = 1;
+  // 体素滤波器
   pcl::VoxelGrid<PointT> voxel;
   // 统计滤波器
   pcl::StatisticalOutlierRemoval<PointT> statistical_filter;

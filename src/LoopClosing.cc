@@ -718,12 +718,18 @@ void LoopClosing::RunGlobalBundleAdjustment(unsigned long nLoopKF) {
 
       // TODO: 全局BA后，更新点云信息
       // 提示：mpPointCloudMapping->UpdateCloud();
-
+      // 需要传入所有关键帧
+      mpPointCloudMapping -> UpdateCloud(mpMap->GetAllKeyFrames());
       cout << "Map updated!" << endl;
     }
 
     mbFinishedGBA = true;
     mbRunningGBA = false;
+  }
+  
+  {
+    unique_lock<mutex> lck{mpPointCloudMapping->loopBusyMutex};
+    mpPointCloudMapping->loopbusy = false;
   }
 }
 
