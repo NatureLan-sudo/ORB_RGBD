@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
   cout << "Start processing sequence ..." << endl;
   cout << "Images in the sequence: " << nImages << endl << endl;
 
-  // Main loop
+  // Main loop 循环，读取图像
   cv::Mat imRGB, imD;
   for (int ni = 0; ni < nImages; ni++) {
     // Read image and depthmap from file
@@ -89,7 +89,7 @@ int main(int argc, char **argv) {
            << "Failed to load image at: " << string(argv[3]) << "/"
            << vstrImageFilenamesRGB[ni] << endl;
       return 1;
-    }
+  }
 
 #ifdef COMPILEDWITHC11
     std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
@@ -98,7 +98,7 @@ int main(int argc, char **argv) {
         std::chrono::monotonic_clock::now();
 #endif
 
-    // Pass the image to the SLAM system
+    // Pass the image to the SLAM system 
     SLAM.TrackRGBD(imRGB, imD, tframe);
 
 #ifdef COMPILEDWITHC11

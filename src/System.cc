@@ -314,6 +314,7 @@ void System::Reset() {
 }
 
 void System::Shutdown() {
+  // 顺序结束线程
   mpLocalMapper->RequestFinish();
   mpLoopCloser->RequestFinish();
   mpPointCloudMapping->Shutdown();

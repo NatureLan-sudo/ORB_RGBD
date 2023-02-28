@@ -383,13 +383,16 @@ bool LoopClosing::ComputeSim3() {
 }
 
 void LoopClosing::CorrectLoop() {
+  // 纠正闭环
   cout << "Loop detected!" << endl;
 
   // Send a stop signal to Local Mapping
   // Avoid new keyframes are inserted while correcting the loop
+  // 闭环发现的时候，局部建图被叫停
   mpLocalMapper->RequestStop();
 
   // If a Global Bundle Adjustment is running, abort it
+  // 如果正在进行BA 就不纠正闭环，如果纠正闭环，就阻塞全局BA
   if (isRunningGBA()) {
     unique_lock<mutex> lock(mMutexGBA);
     mbStopGBA = true;
@@ -638,7 +641,7 @@ void LoopClosing::RunGlobalBundleAdjustment(unsigned long nLoopKF) {
           "Optimizer::GlobalBundleAdjustemnt(mpMap,10,&mbStopGBA,nLoopKF,false)"
           "; "
        << endl;
-  {
+  { // 正在gba的时候，阻塞闭环矫正线程，完成下面的操作后，其他线程再进行
     unique_lock<mutex> lock(mMutexGBA);
     if (idx != mnFullBAIdx) return;
 
@@ -653,6 +656,7 @@ void LoopClosing::RunGlobalBundleAdjustment(unsigned long nLoopKF) {
       }
 
       // Get Map Mutex
+      // 把图拿到，让图固定，不让其他线程改图了。
       unique_lock<mutex> lock(mpMap->mMutexMapUpdate);
 
       // Correct keyframes starting at map first keyframe

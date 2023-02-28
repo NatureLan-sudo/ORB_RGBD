@@ -159,6 +159,7 @@ void PointCloudMapping::Viewer() {
 
     {
       //  等待关键帧的更新
+      // 当前线程调用wait()后将被阻塞，直到另外某个线程调用notify_*唤醒当前线程；
       unique_lock<mutex> lck_keyframeUpdated(keyFrameUpdateMutex);
       keyFrameUpdated.wait(lck_keyframeUpdated);
     }
